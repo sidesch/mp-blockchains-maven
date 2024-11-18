@@ -1,9 +1,11 @@
 package edu.grinnell.csc207.blockchains;
 
+import java.util.Arrays;
+
 /**
  * Encapsulated hashes.
  *
- * @author Your Name Here
+ * @author Sarah Deschamps
  * @author Samuel A. Rebelsky
  */
 public class Hash {
@@ -11,6 +13,7 @@ public class Hash {
   // | Fields |
   // +--------+
 
+  byte[] bytes;
   // +--------------+------------------------------------------------
   // | Constructors |
   // +--------------+
@@ -22,7 +25,7 @@ public class Hash {
    *   The data to copy into the hash.
    */
   public Hash(byte[] data) {
-    // STUB
+    this.bytes = Arrays.copyOf(data, data.length);
   } // Hash(byte[])
 
   // +---------+-----------------------------------------------------
@@ -35,7 +38,7 @@ public class Hash {
    * @return the number of bytes in the hash.
    */
   public int length() {
-    return 0;   // STUB
+    return this.bytes.length;
   } // length()
 
   /**
@@ -48,7 +51,7 @@ public class Hash {
    * @return the ith byte
    */
   public byte get(int i) {
-    return 0;   // STUB
+    return this.bytes[i];
   } // get()
 
   /**
@@ -58,7 +61,7 @@ public class Hash {
    * @return a copy of the bytes in the hash.
    */
   public byte[] getBytes() {
-    return new byte[] {1, 2, 3, 4, 5};      // STUB
+    return Arrays.copyOf(this.bytes, this.bytes.length);
   } // getBytes()
 
   /**
@@ -67,7 +70,11 @@ public class Hash {
    * @return the hash as a hex string.
    */
   public String toString() {
-    return "";          // STUB
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < this.bytes.length; i++) {
+      sb.append(byteToHex(this.bytes[i]));
+    } // for
+    return sb.toString();
   } // toString()
 
   /**
@@ -80,7 +87,11 @@ public class Hash {
    *   otherwise.
    */
   public boolean equals(Object other) {
-    return false;       // STUB
+    if (!(other instanceof Hash)) {
+      return false;
+    } // if
+    Hash otherHash = (Hash) other;
+    return Arrays.equals(this.bytes, otherHash.bytes);
   } // equals(Object)
 
   /**
@@ -91,4 +102,17 @@ public class Hash {
   public int hashCode() {
     return this.toString().hashCode();
   } // hashCode()
+
+  /**
+   * Converts a single byte into its hex value.
+   * @param num
+   *    The byte to convert.
+   * @return the hex representation of the byte in a String.
+   */
+  private String byteToHex(byte num) {
+    char[] hexDigits = new char[2];
+    hexDigits[0] = Character.forDigit((num >> 4) & 0xF, 16);
+    hexDigits[1] = Character.forDigit((num & 0xF), 16);
+    return new String(hexDigits);
+  } // byteToHex(byte)
 } // class Hash
