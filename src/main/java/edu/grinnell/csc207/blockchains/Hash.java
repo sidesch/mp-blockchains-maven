@@ -14,6 +14,9 @@ public class Hash {
   // | Fields |
   // +--------+
 
+  /**
+   * The array of bytes.
+   */
   byte[] bytes;
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -73,7 +76,7 @@ public class Hash {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < this.bytes.length; i++) {
-      sb.append(byteToHex(this.bytes[i]));
+      sb.append(String.format("%02X", Byte.toUnsignedInt(this.bytes[i])));
     } // for
     return sb.toString();
   } // toString()
@@ -103,17 +106,4 @@ public class Hash {
   public int hashCode() {
     return this.toString().hashCode();
   } // hashCode()
-
-  /**
-   * Converts a single byte into its hex value.
-   * @param num
-   *    The byte to convert.
-   * @return the hex representation of the byte in a String.
-   */
-  private String byteToHex(byte num) {
-    char[] hexDigits = new char[2];
-    hexDigits[0] = Character.forDigit((num >> 4) & 0xF, 16);
-    hexDigits[1] = Character.forDigit((num & 0xF), 16);
-    return new String(hexDigits);
-  } // byteToHex(byte)
 } // class Hash
