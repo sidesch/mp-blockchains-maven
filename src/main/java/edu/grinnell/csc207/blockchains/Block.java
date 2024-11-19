@@ -7,7 +7,8 @@ import java.util.Random;
 /**
  * Blocks to be stored in blockchains.
  *
- * @author Your Name Here
+ * @author Sarah Deschamps
+ * @author Jana Vadillo
  * @author Samuel A. Rebelsky
  */
 public class Block {
