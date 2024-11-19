@@ -80,9 +80,14 @@ public class Block {
    *   The hash of the previous block.
    * @param nonce
    *   The nonce of the block.
+   * @throws NoSuchAlgorithmException 
    */
-  public Block(int num, Transaction transaction, Hash prevHash, long nonce) {
-    // STUB
+  public Block(int num, Transaction transaction, Hash prevHash, long nonce) throws NoSuchAlgorithmException {
+    this.blockNum = num;
+    this.trans = transaction;
+    this.previousHash = prevHash;
+    this.nonce = nonce;
+    this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
   } // Block(int, Transaction, Hash, long)
 
   // +---------+-----------------------------------------------------
@@ -109,7 +114,7 @@ public class Block {
    * @return the number of the block.
    */
   public int getNum() {
-    return this.blockNum;  
+    return this.blockNum;
   } // getNum()
 
   /**
@@ -118,7 +123,7 @@ public class Block {
    * @return the transaction.
    */
   public Transaction getTransaction() {
-    return this.trans; // STUB
+    return this.trans;
   } // getTransaction()
 
   /**
@@ -127,7 +132,7 @@ public class Block {
    * @return the nonce.
    */
   public long getNonce() {
-    return this.nonce; 
+    return this.nonce;
   } // getNonce()
 
   /**
@@ -136,7 +141,7 @@ public class Block {
    * @return the hash of the previous block.
    */
   Hash getPrevHash() {
-    return new Hash(new byte[] {0});  // STUB
+    return previousHash;
   } // getPrevHash
 
   /**
@@ -145,7 +150,7 @@ public class Block {
    * @return the hash of the current block.
    */
   Hash getHash() {
-    return new Hash(new byte[] {0});  // STUB
+    return hash;
   } // getHash
 
   /**
