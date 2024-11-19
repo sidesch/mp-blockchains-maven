@@ -109,7 +109,7 @@ public class Block {
    * @return the number of the block.
    */
   public int getNum() {
-    return 0;   // STUB
+    return this.blockNum;  
   } // getNum()
 
   /**
@@ -118,7 +118,7 @@ public class Block {
    * @return the transaction.
    */
   public Transaction getTransaction() {
-    return new Transaction("Here", "There", 0); // STUB
+    return this.trans; // STUB
   } // getTransaction()
 
   /**
@@ -127,7 +127,7 @@ public class Block {
    * @return the nonce.
    */
   public long getNonce() {
-    return 0;   // STUB
+    return this.nonce; 
   } // getNonce()
 
   /**
