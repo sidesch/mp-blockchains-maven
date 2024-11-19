@@ -88,9 +88,14 @@ public class Block {
    *   The hash of the previous block.
    * @param nonce
    *   The nonce of the block.
+   * @throws NoSuchAlgorithmException 
    */
-  public Block(int num, Transaction transaction, Hash prevHash, long nonce) {
-    // STUB
+  public Block(int num, Transaction transaction, Hash prevHash, long nonce) throws NoSuchAlgorithmException {
+    this.blockNum = num;
+    this.trans = transaction;
+    this.previousHash = prevHash;
+    this.nonce = nonce;
+    this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
   } // Block(int, Transaction, Hash, long)
 
   // +---------+-----------------------------------------------------
