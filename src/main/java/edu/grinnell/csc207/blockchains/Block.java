@@ -16,17 +16,30 @@ public class Block {
   // | Fields |
   // +--------+
 
+  /**
+   * Number of the block in the blockchain.
+   */
   int blockNum;
 
+  /**
+   * The hash of this block.
+   */
   Hash hash;
 
-  int nonce;
+  /**
+   * The nonce of this block.
+   */
+  long nonce;
 
+  /**
+   * The transaction.
+   */
   Transaction trans;
 
+  /**
+   * The hash of the previous block in the chain.
+   */
   Hash previousHash;
-
-  HashValidator validator;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -51,10 +64,9 @@ public class Block {
     this.blockNum = num;
     this.trans = transaction;
     this.previousHash = prevHash;
-    this.validator = check;
     Random rand = new Random();
-    this.nonce = rand.nextInt();
-    // TODO: generate new hash and while its not valid keep generating new nonces
+    this.nonce = rand.nextLong();
+    
   } // Block(int, Transaction, Hash, HashValidator)
 
   /**
@@ -81,8 +93,10 @@ public class Block {
    * Compute the hash of the block given all the other info already
    * stored in the block.
    */
-  static void computeHash() {
-    // STUB
+  static void computeHash(int blockNum, Transaction transaction,
+      Hash prev, long nonce) throws NoSuchAlgorithmException{
+    MessageDigest md = MessageDigest.getInstance("sha-256");
+    
   } // computeHash()
 
   // +---------+-----------------------------------------------------
