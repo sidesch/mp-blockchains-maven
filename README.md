@@ -5,6 +5,7 @@ An exploration of blockchains in Java.
 Authors
 
 * Sarah Deschamps
+* Jana Vadillo
 * Samuel A. Rebelsky (starter code)
 
 Acknowledgements

@@ -1,5 +1,9 @@
 package edu.grinnell.csc207.blockchains;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+
 /**
  * Blocks to be stored in blockchains.
  *
@@ -10,6 +14,18 @@ public class Block {
   // +--------+------------------------------------------------------
   // | Fields |
   // +--------+
+
+  int blockNum;
+
+  Hash hash;
+
+  int nonce;
+
+  Transaction trans;
+
+  Hash previousHash;
+
+  HashValidator validator;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -31,7 +47,13 @@ public class Block {
    */
   public Block(int num, Transaction transaction, Hash prevHash,
       HashValidator check) {
-    // STUB
+    this.blockNum = num;
+    this.trans = transaction;
+    this.previousHash = prevHash;
+    this.validator = check;
+    Random rand = new Random();
+    this.nonce = rand.nextInt();
+    // TODO: generate new hash and while its not valid keep generating new nonces
   } // Block(int, Transaction, Hash, HashValidator)
 
   /**

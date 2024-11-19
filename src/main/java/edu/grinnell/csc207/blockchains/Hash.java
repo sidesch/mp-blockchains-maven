@@ -6,6 +6,7 @@ import java.util.Arrays;
  * Encapsulated hashes.
  *
  * @author Sarah Deschamps
+ * @author Jana Vadillo
  * @author Samuel A. Rebelsky
  */
 public class Hash {
