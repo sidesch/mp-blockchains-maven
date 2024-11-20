@@ -1,55 +1,83 @@
 package edu.grinnell.csc207.blockchains;
+
 /**
- * a class to store a single node holding a block in the blochain.
+ * A node within a BlockChain.
+ *
  * @author Jana Vadillo
  * @author Sarah Deschamps
  */
 public class BlockNode {
-    /**
-     * the block being stored
-      */
-    Block block;
-    /** 
-     * the next node in the chain, null if none
-     */
-    BlockNode prev;
-/**
- * Constructor for block.
- * @param heldBlock the block to be held
- */
-    public BlockNode (Block heldBlock){
-        this.block = heldBlock;
-        this.prev = null;
-    }//BlockNode(Block)
-/**
- * constructor for block.
- * @param heldBlock the block being held
- * @param nextBlock the next block.
- */
-    public BlockNode (Block heldBlock,  BlockNode nextBlock){
-        this.block = heldBlock;
-        this.prev = nextBlock;
-    }//BlockNode(Block, Block)
-/**
- * Sets the next block value as a given value
- * @param nextBlock the next block
- */
-    public void setNext (BlockNode prevBlock){
-        this.prev = prevBlock; 
-    }//setNext(nextBlock)
+  // +--------+------------------------------------------------------
+  // | Fields |
+  // +--------+
 
-    /**
-     * return the block being held.
-     */
-    public Block getBlock(){
-        return this.block;
-    }//getBlock()
+  /**
+   * The block being stored.
+   */
+  Block block;
 
-        /**
-     * return the previous block node
-     */
-    public BlockNode getPrevNode(){
-        return this.prev;
-    }//getPrevNode()
+  /**
+   * The previous node in the chain.
+   */
+  BlockNode prev;
 
-}//BlockNode class
+  // +--------------+------------------------------------------------
+  // | Constructors |
+  // +--------------+
+
+  /**
+   * Create a new Block Node storing the given block.
+   *
+   * @param heldBlock
+   *   The block to be held in the node.
+   */
+  public BlockNode(Block heldBlock) {
+    this.block = heldBlock;
+    this.prev = null;
+  } // BlockNode(Block)
+
+  /**
+   * Create a new Block Node storing the given block using the given next node.
+   *
+   * @param heldBlock 
+   *   The block to be held in the node.
+   * @param nextBlock
+   *   The next node.
+   */
+  public BlockNode(Block heldBlock, BlockNode nextBlock) {
+    this.block = heldBlock;
+    this.prev = nextBlock;
+  } // BlockNode(Block, Block)
+
+  // +---------+-----------------------------------------------------
+  // | Methods |
+  // +---------+
+
+  /**
+   * Get the previous node.
+   *
+   * @return the previous node.
+   */
+  public BlockNode getPrev() {
+    return this.prev;
+  } // getPrev()
+
+  /**
+   * Sets the previous node.
+   *
+   * @param prevBlock
+   *   The previous node.
+   */
+  public void setPrev(BlockNode prevBlock) {
+    this.prev = prevBlock; 
+  } // setPrev(BlockNode)
+
+  /**
+   * Get the block in the node.
+   *
+   * @return the block in the node.
+   */
+  public Block getBlock() {
+    return this.block;
+  } // getBlock()
+} // class BlockNode

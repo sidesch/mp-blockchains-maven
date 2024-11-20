@@ -1,7 +1,5 @@
 package edu.grinnell.csc207.blockchains;
 
-import java.security.NoSuchAlgorithmException;
-import edu.grinnell.csc207.blockchains.BlockNode;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -109,7 +107,7 @@ public class BlockChain implements Iterable<Transaction> {
     if (this.getSize() == 0) {
       return false;
     } else {
-      this.last = this.last.getPrevNode();
+      this.last = this.last.getPrev();
       return true;
     } // if-else
   } // removeLast()

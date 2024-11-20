@@ -198,11 +198,9 @@ public class Block {
     sb.append(String.format("Block %d ",this.blockNum));
     sb.append(String.format("Transaction: [Source: %s", this.trans.getSource()));
     sb.append(String.format(", Target %s, Amount: %s]", this.trans.getTarget(), this.trans.getAmount()));
-
     sb.append(String.format(", Nonce: %l",this.nonce));
     sb.append(String.format(", prevHash: " + this.previousHash.toString()));
     sb.append(String.format(", hash: " + this.hash.toString()) + ")");
-    
 
     return sb.toString();  // STUB
   } // toString()
