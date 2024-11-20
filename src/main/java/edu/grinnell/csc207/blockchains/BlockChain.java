@@ -92,15 +92,15 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public void append(Block blk) {
     BlockNode newBlockNode = new BlockNode(blk, this.last);
-    Block nB = newBlockNode.getBlock();//nB = newBlock
+    Block nB = newBlockNode.getBlock();
     Hash PrevHash = nB.getPrevHash();
     Hash blockHash = nB.getPrevHash();
     if (!(this.valid.isValid(blockHash))){
       throw new IllegalArgumentException();
-    }//checks if hash is valid
+    } // checks if hash is valid
     if (!(PrevHash.equals(this.last.getBlock().getHash()))){
       throw new IllegalArgumentException();
-    }//checks if previous hash lines up
+    } // checks if previous hash lines up
     try{
       Hash expectedHash = new Hash(Block.computeHash(nB.getNum(),nB.getTransaction(),
       nB.getPrevHash(),nB.getNonce()));
