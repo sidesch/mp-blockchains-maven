@@ -79,7 +79,7 @@ public class BlockChain implements Iterable<Transaction> {
    * @return the number of blocks in the chain, including the initial block.
    */
   public int getSize() {
-    return this.last.getBlock().getNum();   // STUB
+    return this.last.getBlock().getNum();
   } // getSize()
 
   /**
@@ -138,7 +138,7 @@ public class BlockChain implements Iterable<Transaction> {
    * @return the hash of the last sblock in the chain.
    */
   public Hash getHash() {
-    return new Hash(new byte[] {2, 0, 7});   // STUB
+    return this.last.getBlock().getHash();
   } // getHash()
 
   /**
@@ -150,7 +150,12 @@ public class BlockChain implements Iterable<Transaction> {
    * @return true if the blockchain is correct and false otherwise.
    */
   public boolean isCorrect() {
-    return true;        // STUB
+    try {
+      check();
+      return true;
+    } catch (Exception e) {
+      return false;
+    } // try-catch
   } // isCorrect()
 
   /**
