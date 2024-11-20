@@ -1,6 +1,7 @@
 package edu.grinnell.csc207.blockchains;
 
 import java.security.NoSuchAlgorithmException;
+import edu.grinnell.csc207.blockchains.BlockNode;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -15,6 +16,21 @@ public class BlockChain implements Iterable<Transaction> {
   // | Fields |
   // +--------+
 
+  /**
+   * The first block in the BlockChain.
+   */
+  BlockNode first;
+
+  /**
+   * The last block in the BlockChain.
+   */
+  BlockNode last;
+
+  /**
+   * The validator that determines if the BlockChain is valid.
+   */
+  HashValidator valid;
+
   // +--------------+------------------------------------------------
   // | Constructors |
   // +--------------+
@@ -26,7 +42,14 @@ public class BlockChain implements Iterable<Transaction> {
    *   The validator used to check elements.
    */
   public BlockChain(HashValidator check) {
-    // STUB
+    Transaction emptyTransaction = new Transaction(null, null, 0);
+    byte[] emptyBytes = new byte[] {};
+    Hash prev = new Hash(emptyBytes);
+    Block block = new Block(0, emptyTransaction, prev, check);
+    BlockNode node = new BlockNode(block);
+    this.first = node;
+    this.last = node;
+    this.valid = check;
   } // BlockChain(HashValidator)
 
   // +---------+-----------------------------------------------------
@@ -45,10 +68,8 @@ public class BlockChain implements Iterable<Transaction> {
    *   The transaction that goes in the block.
    *
    * @return a new block with correct number, hashes, and such.
-   *
-   * @throws NoSuchAlgorithmException 
    */
-  public Block mine(Transaction t) throws NoSuchAlgorithmException {
+  public Block mine(Transaction t) {
     return new Block(10, t, new Hash(new byte[] {7}), 11);       // STUB
   } // mine(Transaction)
 
