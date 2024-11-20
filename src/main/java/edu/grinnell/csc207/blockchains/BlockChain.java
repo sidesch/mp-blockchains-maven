@@ -93,8 +93,26 @@ public class BlockChain implements Iterable<Transaction> {
    *   hash is incorrect.
    */
   public void append(Block blk) {
-    BlockNode addedBlock = new BlockNode(blk, this.last);
-    this.last = addedBlock;
+    BlockNode newBlockNode = new BlockNode(blk, this.last);
+    Block nB = newBlockNode.getBlock();//nB = newBlock
+    Hash PrevHash = nB.getPrevHash();
+    Hash blockHash = nB.getPrevHash();
+    if (!(this.valid.isValid(blockHash))){
+      throw new IllegalArgumentException();
+    }//checks if hash is valid
+    if (!(PrevHash.equals(this.last.getBlock().getHash()))){
+      throw new IllegalArgumentException();
+    }//checks if previous hash lines up
+    try{
+      Hash expectedHash = new Hash(Block.computeHash(nB.getNum(),nB.getTransaction(),
+      nB.getPrevHash(),nB.getNonce()));
+
+      if (!(blockHash.equals(expectedHash))){
+        throw new IllegalArgumentException();
+      }//checks if hash is what it should be for message
+    }catch (Exception e){}
+
+    this.last = newBlockNode;
     return;
   } // append()
 
