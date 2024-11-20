@@ -12,14 +12,14 @@ public class BlockNode {
     /** 
      * the next node in the chain, null if none
      */
-    BlockNode next;
+    BlockNode prev;
 /**
  * Constructor for block.
  * @param heldBlock the block to be held
  */
     public BlockNode (Block heldBlock){
         this.block = heldBlock;
-        this.next = null;
+        this.prev = null;
     }//BlockNode(Block)
 /**
  * constructor for block.
@@ -28,14 +28,28 @@ public class BlockNode {
  */
     public BlockNode (Block heldBlock,  BlockNode nextBlock){
         this.block = heldBlock;
-        this.next = nextBlock;
+        this.prev = nextBlock;
     }//BlockNode(Block, Block)
 /**
  * Sets the next block value as a given value
  * @param nextBlock the next block
  */
-    public void setNext (BlockNode nextBlock){
-        this.next = nextBlock; 
+    public void setNext (BlockNode prevBlock){
+        this.prev = prevBlock; 
     }//setNext(nextBlock)
+
+    /**
+     * return the block being held.
+     */
+    public Block getBlock(){
+        return this.block;
+    }//getBlock()
+
+        /**
+     * return the previous block node
+     */
+    public BlockNode getPrevNode(){
+        return this.prev;
+    }//getPrevNode()
 
 }//BlockNode class
