@@ -79,7 +79,7 @@ public class BlockChain implements Iterable<Transaction> {
    * @return the number of blocks in the chain, including the initial block.
    */
   public int getSize() {
-    return 2;   // STUB
+    return this.last.getBlock().getNum();   // STUB
   } // getSize()
 
   /**
@@ -93,7 +93,9 @@ public class BlockChain implements Iterable<Transaction> {
    *   hash is incorrect.
    */
   public void append(Block blk) {
-    // STUB
+    BlockNode addedBlock = new BlockNode(blk, this.last);
+    this.last = addedBlock;
+    return;
   } // append()
 
   /**
