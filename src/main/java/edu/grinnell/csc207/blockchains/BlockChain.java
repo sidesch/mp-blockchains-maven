@@ -1,12 +1,14 @@
 package edu.grinnell.csc207.blockchains;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * A full blockchain.
  *
- * @author Your Name Here
+ * @author Sarah Deschamps
+ * @author Jana Vadillo
  */
 public class BlockChain implements Iterable<Transaction> {
   // +--------+------------------------------------------------------
@@ -43,8 +45,10 @@ public class BlockChain implements Iterable<Transaction> {
    *   The transaction that goes in the block.
    *
    * @return a new block with correct number, hashes, and such.
+   *
+   * @throws NoSuchAlgorithmException 
    */
-  public Block mine(Transaction t) {
+  public Block mine(Transaction t) throws NoSuchAlgorithmException {
     return new Block(10, t, new Hash(new byte[] {7}), 11);       // STUB
   } // mine(Transaction)
 

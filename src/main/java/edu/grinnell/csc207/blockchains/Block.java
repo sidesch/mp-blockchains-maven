@@ -62,19 +62,24 @@ public class Block {
    * @throws NoSuchAlgorithmException 
    */
   public Block(int num, Transaction transaction, Hash prevHash,
-      HashValidator check) throws NoSuchAlgorithmException {
+      HashValidator check) {
     this.blockNum = num;
     this.trans = transaction;
     this.previousHash = prevHash;
     Random rand = new Random();
     long nonce = rand.nextLong();
-    Hash hash = new Hash(computeHash(num, transaction, prevHash, nonce));
-    while (!check.isValid(hash)) {
-      nonce = rand.nextLong();
+    Hash hash;
+    try {
       hash = new Hash(computeHash(num, transaction, prevHash, nonce));
-    } // while
-    this.nonce = nonce;
-    this.hash = hash;
+      while (!check.isValid(hash)) {
+        nonce = rand.nextLong();
+        hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+      } // while
+      this.nonce = nonce;
+      this.hash = hash;
+    } catch (NoSuchAlgorithmException e) {
+      // don't set it
+    } // try-catch
   } // Block(int, Transaction, Hash, HashValidator)
 
   /**
@@ -95,9 +100,11 @@ public class Block {
     this.trans = transaction;
     this.previousHash = prevHash;
     this.nonce = nonce;
-    try{this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
-    }catch (Exception e){}
-    
+    try {
+      this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+    } catch (Exception e) {
+      // don't set it
+    } // try-catch
   } // Block(int, Transaction, Hash, long)
 
   // +---------+-----------------------------------------------------
