@@ -104,7 +104,12 @@ public class BlockChain implements Iterable<Transaction> {
    *   is removed).
    */
   public boolean removeLast() {
-    return true;        // STUB
+    if (this.getSize() == 0) {
+      return false;
+    } else {
+      this.last = this.last.getPrevNode();
+      return true;
+    } // if-else
   } // removeLast()
 
   /**
