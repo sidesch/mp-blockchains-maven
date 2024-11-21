@@ -53,7 +53,26 @@ public class BlockChain implements Iterable<Transaction> {
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
-
+private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentException{
+  Hash prevHash = blk.getPrevHash();
+  Hash blockHash = blk.getHash();
+  if (!this.valid.isValid(blockHash)
+      || !prevHash.equals(this.getNode(previous).getBlock.getHash())) {
+    throw new IllegalArgumentException();
+  } // if
+  try {
+    Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
+                                                   blk.getTransaction(),
+                                                   blk.getPrevHash(),
+                                                   blk.getNonce()));
+    if (!(blockHash.equals(expectedHash))){
+      throw new IllegalArgumentException();
+    } // if
+  } catch (Exception e) {
+    // do not append
+  } // try-catch
+  return true;
+}
   // +---------+-----------------------------------------------------
   // | Methods |
   // +---------+
@@ -92,23 +111,7 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public void append(Block blk) {
     BlockNode newBlockNode = new BlockNode(blk, this.last);
-    Hash prevHash = blk.getPrevHash();
-    Hash blockHash = blk.getHash();
-    if (!this.valid.isValid(blockHash)
-        || !prevHash.equals(this.last.getBlock().getHash())) {
-      throw new IllegalArgumentException();
-    } // if
-    try {
-      Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
-                                                     blk.getTransaction(),
-                                                     blk.getPrevHash(),
-                                                     blk.getNonce()));
-      if (!(blockHash.equals(expectedHash))){
-        throw new IllegalArgumentException();
-      } // if
-    } catch (Exception e) {
-      // do not append
-    } // try-catch
+
     this.last = newBlockNode;
   } // append(Block)
 
