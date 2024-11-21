@@ -42,8 +42,8 @@ public class BlockChain implements Iterable<Transaction> {
   public BlockChain(HashValidator check) {
     Transaction emptyTransaction = new Transaction(null, null, 0);
     byte[] emptyBytes = new byte[] {};
-    Hash prev = new Hash(emptyBytes);
-    Block block = new Block(0, emptyTransaction, prev, check);
+    Hash next = new Hash(emptyBytes);
+    Block block = new Block(0, emptyTransaction, next, check);
     BlockNode node = new BlockNode(block);
     this.first = node;
     this.last = node;
@@ -73,6 +73,28 @@ private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentExcept
   } // try-catch
   return true;
 }
+
+  /**
+   * Returns the block with the given number. Return null
+   * if this block doesn't exist.
+   *
+   * @param num
+   *    The block number.
+   *
+   * @return the block with the block number.
+   */
+  private BlockNode getNode(int num) {
+    BlockNode curr = this.first;
+    for (int i = 1; i < num; i++) {
+      if (curr.getNext() == null) {
+        return null;
+      } // if
+      curr = curr.getNext();
+    } // for
+    return curr;
+  } // getBlock(int)
+
+
   // +---------+-----------------------------------------------------
   // | Methods |
   // +---------+
