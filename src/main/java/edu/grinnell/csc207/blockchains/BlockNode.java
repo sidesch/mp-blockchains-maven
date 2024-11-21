@@ -55,29 +55,17 @@ public class BlockNode {
   // | Methods |
   // +---------+
 
-
+  /**
+   * Sets the next node.
+   *
+   * @param nextBlock
+   *   The next node.
+   */
+  public void setNext(BlockNode nextBlock) {
+    this.next = nextBlock; 
+  } // setNext(BlockNode)
 
   /**
-   * Sets the previous node.
-   *
-   * @param prevBlock
-   *   The previous node.
-   */
-  public void setNext(BlockNode prevBlock) {
-    this.next = prevBlock; 
-  } // setPrev(BlockNode)
-
-  /**
-   * Get the block in the node.
-   *
-   * @return the block in the node.
-   */
-  public Block getBlock() {
-    return this.block;
-  } // getBlock()
-
-
-    /**
    * Get the block in the node.
    *
    * @return the block in the node.
@@ -85,4 +73,13 @@ public class BlockNode {
   public BlockNode getNext() {
     return this.next;
   } // getNext()
+
+  /**
+   * Get the block in this node.
+   *
+   * @return the block in this node.
+   */
+  public Block getBlock() {
+    return this.block;
+  } // getBlock()
 } // class BlockNode

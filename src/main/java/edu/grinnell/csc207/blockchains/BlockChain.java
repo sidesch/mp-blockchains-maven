@@ -63,7 +63,7 @@ public class BlockChain implements Iterable<Transaction> {
    *
    * @return the block with the block number.
    */
-  private BlockNode getBlock(int num) {
+  private BlockNode getNode(int num) {
     BlockNode curr = this.first;
     for (int i = 1; i < num; i++) {
       if (curr.getNext() == null) {
