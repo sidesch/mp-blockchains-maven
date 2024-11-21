@@ -1,5 +1,6 @@
 package edu.grinnell.csc207.blockchains;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -29,6 +30,11 @@ public class BlockChain implements Iterable<Transaction> {
    */
   HashValidator valid;
 
+  /**
+   * The table of users and deposits.
+   */
+  HashMap users;
+
   // +--------------+------------------------------------------------
   // | Constructors |
   // +--------------+
@@ -48,31 +54,41 @@ public class BlockChain implements Iterable<Transaction> {
     this.first = node;
     this.last = node;
     this.valid = check;
+    this.users = new HashMap();
   } // BlockChain(HashValidator)
 
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
-private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentException{
-  Hash prevHash = blk.getPrevHash();
-  Hash blockHash = blk.getHash();
-  if (!this.valid.isValid(blockHash)
-      || !prevHash.equals(this.getNode(previous).getBlock.getHash())) {
-    throw new IllegalArgumentException();
-  } // if
-  try {
-    Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
-                                                   blk.getTransaction(),
-                                                   blk.getPrevHash(),
-                                                   blk.getNonce()));
-    if (!(blockHash.equals(expectedHash))){
+  /**
+   * Checks whether this block is valid in the chain.
+   *
+   * @param blk
+   *    The block to check validity.
+   *
+   * @return true if everything is valid, false otherwise.
+   */
+  private boolean checkBlock(Block blk) {
+    Hash prevHash = blk.getPrevHash();
+    Hash blockHash = blk.getHash();
+    int previous = blk.getNum() - 1;
+    if (!this.valid.isValid(blockHash)
+        || !prevHash.equals(this.getNode(previous).getBlock().getHash())) {
       throw new IllegalArgumentException();
     } // if
-  } catch (Exception e) {
-    // do not append
-  } // try-catch
-  return true;
-}
+    try {
+      Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
+                                                     blk.getTransaction(),
+                                                     blk.getPrevHash(),
+                                                     blk.getNonce()));
+      if (!(blockHash.equals(expectedHash))){
+        throw new IllegalArgumentException();
+      } // if
+    } catch (Exception e) {
+      // do not append
+    } // try-catch
+    return true;
+  } // checkBlock(Block)
 
   /**
    * Returns the block with the given number. Return null
@@ -133,7 +149,7 @@ private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentExcept
    */
   public void append(Block blk) throws IllegalArgumentException {
     BlockNode newBlockNode = new BlockNode(blk, this.last);
-    if (checkBlock(blk, this.last.getBlock().getNum())){
+    if (checkBlock(blk)){
       this.last = newBlockNode;
     }
   } // append(Block)
