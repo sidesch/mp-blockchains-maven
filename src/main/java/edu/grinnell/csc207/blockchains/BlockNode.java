@@ -19,7 +19,9 @@ public class BlockNode {
   /**
    * The previous node in the chain.
    */
-  BlockNode prev;
+
+
+  BlockNode next;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -33,7 +35,7 @@ public class BlockNode {
    */
   public BlockNode(Block heldBlock) {
     this.block = heldBlock;
-    this.prev = null;
+    this.next = null;
   } // BlockNode(Block)
 
   /**
@@ -46,21 +48,14 @@ public class BlockNode {
    */
   public BlockNode(Block heldBlock, BlockNode nextBlock) {
     this.block = heldBlock;
-    this.prev = nextBlock;
+    this.next = nextBlock;
   } // BlockNode(Block, Block)
 
   // +---------+-----------------------------------------------------
   // | Methods |
   // +---------+
 
-  /**
-   * Get the previous node.
-   *
-   * @return the previous node.
-   */
-  public BlockNode getPrev() {
-    return this.prev;
-  } // getPrev()
+
 
   /**
    * Sets the previous node.
@@ -68,8 +63,8 @@ public class BlockNode {
    * @param prevBlock
    *   The previous node.
    */
-  public void setPrev(BlockNode prevBlock) {
-    this.prev = prevBlock; 
+  public void setNext(BlockNode prevBlock) {
+    this.next = prevBlock; 
   } // setPrev(BlockNode)
 
   /**
@@ -80,4 +75,14 @@ public class BlockNode {
   public Block getBlock() {
     return this.block;
   } // getBlock()
+
+
+    /**
+   * Get the block in the node.
+   *
+   * @return the block in the node.
+   */
+  public BlockNode getNext() {
+    return this.next;
+  } // getNext()
 } // class BlockNode
