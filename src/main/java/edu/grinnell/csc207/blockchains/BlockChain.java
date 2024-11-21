@@ -92,27 +92,25 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public void append(Block blk) {
     BlockNode newBlockNode = new BlockNode(blk, this.last);
-    Block nB = newBlockNode.getBlock();
-    Hash PrevHash = nB.getPrevHash();
-    Hash blockHash = nB.getPrevHash();
-    if (!(this.valid.isValid(blockHash))){
+    Hash prevHash = blk.getPrevHash();
+    Hash blockHash = blk.getHash();
+    if (!this.valid.isValid(blockHash)
+        || !prevHash.equals(this.last.getBlock().getHash())) {
       throw new IllegalArgumentException();
-    } // checks if hash is valid
-    if (!(PrevHash.equals(this.last.getBlock().getHash()))){
-      throw new IllegalArgumentException();
-    } // checks if previous hash lines up
-    try{
-      Hash expectedHash = new Hash(Block.computeHash(nB.getNum(),nB.getTransaction(),
-      nB.getPrevHash(),nB.getNonce()));
-
+    } // if
+    try {
+      Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
+                                                     blk.getTransaction(),
+                                                     blk.getPrevHash(),
+                                                     blk.getNonce()));
       if (!(blockHash.equals(expectedHash))){
         throw new IllegalArgumentException();
-      }//checks if hash is what it should be for message
-    }catch (Exception e){}
-
+      } // if
+    } catch (Exception e) {
+      // do not append
+    } // try-catch
     this.last = newBlockNode;
-    return;
-  } // append()
+  } // append(Block)
 
   /**
    * Attempt to remove the last block from the chain.
