@@ -53,26 +53,36 @@ public class BlockChain implements Iterable<Transaction> {
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
-private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentException{
-  Hash prevHash = blk.getPrevHash();
-  Hash blockHash = blk.getHash();
-  if (!this.valid.isValid(blockHash)
-      || !prevHash.equals(this.getNode(previous).getBlock.getHash())) {
-    throw new IllegalArgumentException();
-  } // if
-  try {
-    Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
-                                                   blk.getTransaction(),
-                                                   blk.getPrevHash(),
-                                                   blk.getNonce()));
-    if (!(blockHash.equals(expectedHash))){
+
+  /**
+   * Checks whether this block is valid in the chain.
+   *
+   * @param blk
+   *    The block to check validity.
+   *
+   * @return true if everything is valid, false otherwise.
+   */
+  private boolean checkBlock(Block blk) {
+    Hash prevHash = blk.getPrevHash();
+    Hash blockHash = blk.getHash();
+    int previous = blk.getNum() - 1;
+    if (!this.valid.isValid(blockHash)
+        || !prevHash.equals(this.getNode(previous).getBlock().getHash())) {
       throw new IllegalArgumentException();
     } // if
-  } catch (Exception e) {
-    // do not append
-  } // try-catch
-  return true;
-}
+    try {
+      Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
+                                                     blk.getTransaction(),
+                                                     blk.getPrevHash(),
+                                                     blk.getNonce()));
+      if (!(blockHash.equals(expectedHash))){
+        throw new IllegalArgumentException();
+      } // if
+    } catch (Exception e) {
+      // do not append
+    } // try-catch
+    return true;
+  } // checkBlock(Block)
 
   /**
    * Returns the block with the given number. Return null
@@ -200,6 +210,7 @@ private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentExcept
    */
   public Iterator<String> users() {
     return new Iterator<String>() {
+      
       public boolean hasNext() {
         return false;   // STUB
       } // hasNext()
