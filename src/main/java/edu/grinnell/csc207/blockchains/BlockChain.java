@@ -53,11 +53,11 @@ public class BlockChain implements Iterable<Transaction> {
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
-private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentException{
+private boolean checkBlock(Block blk, int previous) throws IllegalArgumentException{
   Hash prevHash = blk.getPrevHash();
   Hash blockHash = blk.getHash();
   if (!this.valid.isValid(blockHash)
-      || !prevHash.equals(this.getNode(previous).getBlock.getHash())) {
+      || !prevHash.equals(this.getNode(previous).getBlock().getHash())) {
     throw new IllegalArgumentException();
   } // if
   try {
@@ -131,10 +131,11 @@ private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentExcept
    *   the hash is not appropriate for the contents, or (c) the previous
    *   hash is incorrect.
    */
-  public void append(Block blk) {
+  public void append(Block blk) throws IllegalArgumentException {
     BlockNode newBlockNode = new BlockNode(blk, this.last);
-
-    this.last = newBlockNode;
+    if (checkBlock(blk, this.last.getBlock().getNum())){
+      this.last = newBlockNode;
+    }
   } // append(Block)
 
   /**
@@ -148,7 +149,8 @@ private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentExcept
     if (this.getSize() == 0) {
       return false;
     } else {
-      this.last = this.last.getPrev();
+      this.last = getNode(this.last.getBlock().getNum() -1);
+      this.last.setNext(null);
       return true;
     } // if-else
   } // removeLast()
