@@ -53,11 +53,11 @@ public class BlockChain implements Iterable<Transaction> {
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
-private boolean checkBlock(Block blk, int previous) throws IllegalArgumentException{
+private boolean CheckBlock(Block blk, int previous) throws IllegalArgumentException{
   Hash prevHash = blk.getPrevHash();
   Hash blockHash = blk.getHash();
   if (!this.valid.isValid(blockHash)
-      || !prevHash.equals(this.getNode(previous).getBlock().getHash())) {
+      || !prevHash.equals(this.getNode(previous).getBlock.getHash())) {
     throw new IllegalArgumentException();
   } // if
   try {
@@ -202,6 +202,7 @@ private boolean checkBlock(Block blk, int previous) throws IllegalArgumentExcept
    */
   public Iterator<String> users() {
     return new Iterator<String>() {
+      
       public boolean hasNext() {
         return false;   // STUB
       } // hasNext()
