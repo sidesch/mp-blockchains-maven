@@ -1,5 +1,6 @@
 package edu.grinnell.csc207.blockchains;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -54,12 +55,13 @@ public class BlockChain implements Iterable<Transaction> {
     this.first = node;
     this.last = node;
     this.valid = check;
-    this.users = new HashMap();
+    this.users = new HashMap<String, Integer>();
   } // BlockChain(HashValidator)
 
   // +---------+-----------------------------------------------------
   // | Helpers |
   // +---------+
+
   /**
    * Checks whether this block is valid in the chain.
    *
@@ -110,6 +112,15 @@ public class BlockChain implements Iterable<Transaction> {
     return curr;
   } // getBlock(int)
 
+  /**
+   * Updates the HashMap of users given the transaction.
+   *
+   * @param t
+   *    The transaction from which to read.
+   */
+  private void addTransaction(Transaction t) {
+    // STUB
+  } // addTransaction(Transaction)
 
   // +---------+-----------------------------------------------------
   // | Methods |
@@ -125,7 +136,9 @@ public class BlockChain implements Iterable<Transaction> {
    * @return a new block with correct number, hashes, and such.
    */
   public Block mine(Transaction t) {
-    return new Block(10, t, new Hash(new byte[] {7}), 11);       // STUB
+    int lastNum = this.last.getBlock().getNum();
+    Hash newHash = new Hash(ByteBuffer.allocate(Integer.BYTES).putInt(lastNum).array());
+    return new Block(lastNum + 1, t, newHash, valid);
   } // mine(Transaction)
 
   /**
@@ -148,10 +161,13 @@ public class BlockChain implements Iterable<Transaction> {
    *   hash is incorrect.
    */
   public void append(Block blk) throws IllegalArgumentException {
-    BlockNode newBlockNode = new BlockNode(blk, this.last);
-    if (checkBlock(blk)){
+    BlockNode newBlockNode = new BlockNode(blk);
+    if (checkBlock(blk)) {
+      this.last.setNext(newBlockNode);
       this.last = newBlockNode;
-    }
+    } else {
+      throw new IllegalArgumentException();
+    } // if-else
   } // append(Block)
 
   /**
@@ -162,7 +178,7 @@ public class BlockChain implements Iterable<Transaction> {
    *   is removed).
    */
   public boolean removeLast() {
-    if (this.getSize() == 0) {
+    if (this.getSize() <= 1) {
       return false;
     } else {
       this.last = getNode(this.last.getBlock().getNum() -1);
@@ -274,5 +290,4 @@ public class BlockChain implements Iterable<Transaction> {
       } // next()
     };
   } // iterator()
-
 } // class BlockChain
