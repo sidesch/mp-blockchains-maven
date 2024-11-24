@@ -18,6 +18,7 @@ public class Block {
   // +--------+
 
   /**
+<<<<<<< HEAD
    * Number of the block in the blockchain.
    */
   int blockNum;
@@ -41,6 +42,16 @@ public class Block {
    * The hash of the previous block in the chain.
    */
   Hash previousHash;
+=======
+   * The transaction.
+   */
+  Transaction transaction;
+
+  /**
+   * The nonce.
+   */
+  long nonce;
+>>>>>>> upstream/main
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -126,6 +137,7 @@ public class Block {
    * @return the computed byte array, representing the hash.
    * @throws NoSuchAlgorithmException
    */
+<<<<<<< HEAD
   void computeHash() throws NoSuchAlgorithmException{
     MessageDigest md = MessageDigest.getInstance("sha-256");
     md.update(ByteBuffer.allocate(Integer.BYTES).putInt(this.blockNum).array());
@@ -135,6 +147,10 @@ public class Block {
     md.update(this.previousHash.getBytes());
     md.update(ByteBuffer.allocate(Long.BYTES).putLong(this.nonce).array());
     this.hash = new Hash(md.digest());
+=======
+  void computeHash() {
+    // STUB
+>>>>>>> upstream/main
   } // computeHash()
 
   // +---------+-----------------------------------------------------
