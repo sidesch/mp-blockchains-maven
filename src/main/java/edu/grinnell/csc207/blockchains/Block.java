@@ -70,10 +70,10 @@ public class Block {
     long nonce = rand.nextLong();
     Hash hash;
     try {
-      hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+      computeHash();
       while (!check.isValid(hash)) {
         nonce = rand.nextLong();
-        hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+        computeHash();
       } // while
       this.nonce = nonce;
       this.hash = hash;
@@ -101,7 +101,7 @@ public class Block {
     this.previousHash = prevHash;
     this.nonce = nonce;
     try {
-      this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+      computeHash();
     } catch (Exception e) {
       // don't set it
     } // try-catch
@@ -126,17 +126,15 @@ public class Block {
    * @return the computed byte array, representing the hash.
    * @throws NoSuchAlgorithmException
    */
-  static byte[] computeHash(int blockNum, Transaction transaction,
-      Hash prev, long nonce) throws NoSuchAlgorithmException{
+  void computeHash() throws NoSuchAlgorithmException{
     MessageDigest md = MessageDigest.getInstance("sha-256");
-    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(blockNum).array());
-    md.update(transaction.getSource().getBytes());
-    md.update(transaction.getTarget().getBytes());
-    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(transaction.getAmount()).array());
-    md.update(prev.getBytes());
-    md.update(ByteBuffer.allocate(Long.BYTES).putLong(nonce).array());
-    byte[] hash = md.digest();
-    return hash;
+    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(this.blockNum).array());
+    md.update(this.trans.getSource().getBytes());
+    md.update(this.trans.getTarget().getBytes());
+    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(this.trans.getAmount()).array());
+    md.update(this.previousHash.getBytes());
+    md.update(ByteBuffer.allocate(Long.BYTES).putLong(this.nonce).array());
+    this.hash = new Hash(md.digest());
   } // computeHash()
 
   // +---------+-----------------------------------------------------
