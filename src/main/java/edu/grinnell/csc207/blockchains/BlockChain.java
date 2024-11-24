@@ -79,10 +79,8 @@ public class BlockChain implements Iterable<Transaction> {
       throw new IllegalArgumentException();
     } // if
     try {
-      Hash expectedHash = new Hash(Block.computeHash(blk.getNum(),
-                                                     blk.getTransaction(),
-                                                     blk.getPrevHash(),
-                                                     blk.getNonce()));
+      blk.computeHash();
+      Hash expectedHash = blk.getHash();
       if (!(blockHash.equals(expectedHash))){
         throw new IllegalArgumentException();
       } // if
