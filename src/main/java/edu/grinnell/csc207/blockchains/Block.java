@@ -180,7 +180,7 @@ public class Block {
    *
    * @return the hash of the current block.
    */
-  Hash getHash() {
+  public Hash getHash() {
     return hash;
   } // getHash
 

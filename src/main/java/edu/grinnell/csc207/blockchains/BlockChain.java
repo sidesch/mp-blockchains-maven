@@ -146,6 +146,15 @@ public class BlockChain implements Iterable<Transaction> {
   // +---------+
 
   /**
+   * Gets the last block.
+   *
+   * @return the last block in the block chain.
+   */
+  public Block getLastBlock() {
+    return this.last.getBlock();
+  } // getLastBlock()
+
+  /**
    * Mine for a new valid block for the end of the chain, returning that
    * block.
    *
