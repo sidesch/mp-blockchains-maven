@@ -41,7 +41,7 @@ public class BlockNode {
   /**
    * Create a new Block Node storing the given block using the given next node.
    *
-   * @param heldBlock 
+   * @param heldBlock
    *   The block to be held in the node.
    * @param nextBlock
    *   The next node.
@@ -62,7 +62,7 @@ public class BlockNode {
    *   The next node.
    */
   public void setNext(BlockNode nextBlock) {
-    this.next = nextBlock; 
+    this.next = nextBlock;
   } // setNext(BlockNode)
 
   /**

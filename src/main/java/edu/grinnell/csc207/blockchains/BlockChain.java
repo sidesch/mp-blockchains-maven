@@ -81,7 +81,7 @@ public class BlockChain implements Iterable<Transaction> {
     try {
       blk.computeHash();
       Hash expectedHash = blk.getHash();
-      if (!(blockHash.equals(expectedHash))){
+      if (!(blockHash.equals(expectedHash))) {
         throw new IllegalArgumentException();
       } // if
     } catch (Exception e) {
@@ -210,7 +210,7 @@ public class BlockChain implements Iterable<Transaction> {
     if (this.getSize() <= 1) {
       return false;
     } else {
-      this.last = getNode(this.last.getBlock().getNum() -1);
+      this.last = getNode(this.last.getBlock().getNum() - 1);
       this.last.setNext(null);
       return true;
     } // if-else
@@ -268,7 +268,6 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public Iterator<String> users() {
     return new Iterator<String>() {
-      
       Set<String> people = clients.keySet();
       Iterator<String> iter = people.iterator();
 
