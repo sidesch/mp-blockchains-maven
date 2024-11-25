@@ -24,6 +24,7 @@ public class BlockChainUI {
                 balance: finds a user's balance
                 help: prints this list of commands
                 quit: quits the program""" );
+        return;
     }
 
 
