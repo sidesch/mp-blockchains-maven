@@ -35,7 +35,7 @@ public class Block {
   /**
    * The transaction.
    */
-  Transaction trans;
+  Transaction transaction;
 
   /**
    * The hash of the previous block in the chain.
@@ -64,19 +64,17 @@ public class Block {
   public Block(int num, Transaction transaction, Hash prevHash,
       HashValidator check) {
     this.blockNum = num;
-    this.trans = transaction;
+    this.transaction = transaction;
     this.previousHash = prevHash;
     Random rand = new Random();
     long nonce = rand.nextLong();
-    Hash hash;
     try {
-      hash = new Hash(computeHash(num, transaction, prevHash, nonce));
-      while (!check.isValid(hash)) {
+      computeHash();
+      while (!check.isValid(this.hash)) {
         nonce = rand.nextLong();
-        hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+        computeHash();
       } // while
       this.nonce = nonce;
-      this.hash = hash;
     } catch (NoSuchAlgorithmException e) {
       // don't set it
     } // try-catch
@@ -97,11 +95,11 @@ public class Block {
    */
   public Block(int num, Transaction transaction, Hash prevHash, long nonce){
     this.blockNum = num;
-    this.trans = transaction;
+    this.transaction = transaction;
     this.previousHash = prevHash;
     this.nonce = nonce;
     try {
-      this.hash = new Hash(computeHash(num, transaction, prevHash, nonce));
+      computeHash();
     } catch (Exception e) {
       // don't set it
     } // try-catch
@@ -126,17 +124,15 @@ public class Block {
    * @return the computed byte array, representing the hash.
    * @throws NoSuchAlgorithmException
    */
-  static byte[] computeHash(int blockNum, Transaction transaction,
-      Hash prev, long nonce) throws NoSuchAlgorithmException{
+  void computeHash() throws NoSuchAlgorithmException{
     MessageDigest md = MessageDigest.getInstance("sha-256");
-    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(blockNum).array());
-    md.update(transaction.getSource().getBytes());
-    md.update(transaction.getTarget().getBytes());
-    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(transaction.getAmount()).array());
-    md.update(prev.getBytes());
-    md.update(ByteBuffer.allocate(Long.BYTES).putLong(nonce).array());
-    byte[] hash = md.digest();
-    return hash;
+    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(this.blockNum).array());
+    md.update(this.transaction.getSource().getBytes());
+    md.update(this.transaction.getTarget().getBytes());
+    md.update(ByteBuffer.allocate(Integer.BYTES).putInt(this.transaction.getAmount()).array());
+    md.update(this.previousHash.getBytes());
+    md.update(ByteBuffer.allocate(Long.BYTES).putLong(this.nonce).array());
+    this.hash = new Hash(md.digest());
   } // computeHash()
 
   // +---------+-----------------------------------------------------
@@ -158,7 +154,7 @@ public class Block {
    * @return the transaction.
    */
   public Transaction getTransaction() {
-    return this.trans;
+    return this.transaction;
   } // getTransaction()
 
   /**
@@ -196,8 +192,8 @@ public class Block {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("Block %d ",this.blockNum));
-    sb.append(String.format("Transaction: [Source: %s", this.trans.getSource()));
-    sb.append(String.format(", Target %s, Amount: %s]", this.trans.getTarget(), this.trans.getAmount()));
+    sb.append(String.format("Transaction: [Source: %s", this.transaction.getSource()));
+    sb.append(String.format(", Target %s, Amount: %s]", this.transaction.getTarget(), this.transaction.getAmount()));
     sb.append(String.format(", Nonce: %l",this.nonce));
     sb.append(String.format(", prevHash: " + this.previousHash.toString()));
     sb.append(String.format(", hash: " + this.hash.toString()) + ")");
