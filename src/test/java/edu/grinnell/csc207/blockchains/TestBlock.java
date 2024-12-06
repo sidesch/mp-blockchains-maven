@@ -116,10 +116,10 @@ public class TestBlock {
     Hash ph = new Hash(new byte[] {3, 4, 5});
     Block b = new Block(10, t, ph, 67);
     
-    assertEquals(10, b.getNum(), "number of block");
-    assertEquals(t, b.getTransaction(), "transaction in block");
-    assertEquals(ph, b.getPrevHash(), "previous hash");
-    assertEquals(67, b.getNonce(), "nonce");
+    assertEquals(10, b.getNum(), "R: number of block");
+    assertEquals(t, b.getTransaction(), "R: transaction in block");
+    assertEquals(ph, b.getPrevHash(), "R: previous hash");
+    assertEquals(67, b.getNonce(), "R: nonce");
   } // simpleBlockTest
 
   /**
@@ -131,10 +131,10 @@ public class TestBlock {
     Hash ph = new Hash(new byte[] {5, 5, 5, 5, 5});
     Block b = new Block(5, t, ph, 5555);
     
-    assertEquals(5, b.getNum(), "number of block for deposit");
-    assertEquals(t, b.getTransaction(), "deposit in block");
-    assertEquals(ph, b.getPrevHash(), "previous hash for deposit");
-    assertEquals(5555, b.getNonce(), "nonce for deposit");
+    assertEquals(5, b.getNum(), "M: number of block for deposit");
+    assertEquals(t, b.getTransaction(), "M: deposit in block");
+    assertEquals(ph, b.getPrevHash(), "M: previous hash for deposit");
+    assertEquals(5555, b.getNonce(), "M: nonce for deposit");
   } // depositTest()
 
   /**
@@ -146,9 +146,9 @@ public class TestBlock {
     Hash ph = new Hash(new byte[] {(byte) 255});
     Block b = new Block(5, t, ph, (hash) -> true);
 
-    assertEquals(5, b.getNum(), "number of validated block");
-    assertEquals(t, b.getTransaction(), "transaction in validated block");
-    assertEquals(ph, b.getPrevHash(), "previous hash in validated block");
+    assertEquals(5, b.getNum(), "M: number of validated block");
+    assertEquals(t, b.getTransaction(), "M: transaction in validated block");
+    assertEquals(ph, b.getPrevHash(), "M: previous hash in validated block");
   } // simpleValidatedBlockTest
 
   /**
@@ -161,11 +161,11 @@ public class TestBlock {
     Block b = new Block(8, t, ph, (hash) -> true);
 
     assertEquals(8, b.getNum(), 
-        "number of validated deposit block");
+        "M: number of validated deposit block");
     assertEquals(t, b.getTransaction(), 
-        "transaction in validated deposit block");
+        "M: transaction in validated deposit block");
     assertEquals(ph, b.getPrevHash(), 
-        "previous hash in validated deposit block");
+        "M: previous hash in validated deposit block");
   } // simpleValidatedBlockTest
 
   /**
@@ -177,10 +177,10 @@ public class TestBlock {
     Hash ph = new Hash(new byte[] {(byte) 255});
     Block b = new Block(8, t, ph, (h) -> (h.length() > 1) && (h.get(0) == 5));
 
-    assertEquals(8, b.getNum(), "number of 5-valid block");
-    assertEquals(t, b.getTransaction(), "transaction in 5-valid block");
-    assertEquals(ph, b.getPrevHash(), "previous 5-valid hash");
-    assertEquals(5, b.getHash().get(0), "valid hash (starts with 5)");
+    assertEquals(8, b.getNum(), "M: number of 5-valid block");
+    assertEquals(t, b.getTransaction(), "M: transaction in 5-valid block");
+    assertEquals(ph, b.getPrevHash(), "M: previous 5-valid hash");
+    assertEquals(5, b.getHash().get(0), "M: valid hash (starts with 5)");
   } // anotherValidatedBlockTest()
 
   /**
@@ -193,13 +193,13 @@ public class TestBlock {
     Block b = new Block(7, t, ph, (h) -> (h.length() > 0) && (h.get(0) == 7));
 
     assertEquals(7, b.getNum(), 
-        "number of 7-valid deposit block");
+        "M: number of 7-valid deposit block");
     assertEquals(t, b.getTransaction(), 
-        "transaction in 7-valid deposit block");
+        "M: transaction in 7-valid deposit block");
     assertEquals(ph, b.getPrevHash(), 
-        "previous hash in 7-valid deposit block");
+        "M: previous hash in 7-valid deposit block");
     assertEquals(7, b.getHash().get(0), 
-        "valid hash in 7-valid deposit block (starts with 7)");
+        "M: valid hash in 7-valid deposit block (starts with 7)");
   } // anotherValidatedDepositTest()
 
   /**
@@ -210,7 +210,7 @@ public class TestBlock {
     Transaction t = new Transaction("Sam", "Sam", 50);
     Hash ph = new Hash(new byte[] {10, 20, 30, 40, 50});
     Block b = new Block(5, t, ph, 100);
-    assertArrayEquals(expectedHash(b), b.getHash().getBytes(), "correct hash");
+    assertArrayEquals(expectedHash(b), b.getHash().getBytes(), "M: correct hash");
   } // hashTest()
 
   /**
@@ -223,9 +223,9 @@ public class TestBlock {
     Hash ph = new Hash(new byte[] {42, 42, 42, 42, 42, 42});
     Block b = new Block(5, t, ph, (h) -> (h.length() > 0) && (h.get(0) == 0));
     assertEquals(0, b.getHash().get(0), 
-        "hash in validated block starts with 0");
+        "M: hash in validated block starts with 0");
     assertArrayEquals(expectedHash(b), b.getHash().getBytes(), 
-        "correct hash in validated block");
+        "M: correct hash in validated block");
   } // validatedHashTest()
 
   /**
@@ -238,9 +238,9 @@ public class TestBlock {
     Block b = 
         new Block(0, t, ph, (hash) -> true);
 
-    assertEquals(0, b.getNum(), "correct number in initial block");
-    assertEquals(t, b.getTransaction(), "correct transaction in initial block");
-    assertEquals(ph, b.getPrevHash(), "correct previous hash in initial block");
+    assertEquals(0, b.getNum(), "R: correct number in initial block");
+    assertEquals(t, b.getTransaction(), "R: correct transaction in initial block");
+    assertEquals(ph, b.getPrevHash(), "R: correct previous hash in initial block");
   } // initialBlockTest()
 
   /**
