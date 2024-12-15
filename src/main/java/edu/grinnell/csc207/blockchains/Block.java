@@ -67,14 +67,13 @@ public class Block {
     this.transaction = trans;
     this.previousHash = prevHash;
     Random rand = new Random();
-    long tryNonce = rand.nextLong();
+    this.nonce = rand.nextLong();
     try {
       computeHash();
       while (!check.isValid(this.hash)) {
-        tryNonce = rand.nextLong();
+        this.nonce = rand.nextLong();
         computeHash();
       } // while
-      this.nonce = tryNonce;
     } catch (NoSuchAlgorithmException e) {
       // don't set it
     } // try-catch
