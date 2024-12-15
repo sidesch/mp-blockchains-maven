@@ -295,6 +295,9 @@ public class BlockChain implements Iterable<Transaction> {
       if (!valid.isValid(actualhash)) {
         throw new Exception("Hash is not valid");
       } // if
+      if (curr.getTransaction().getAmount() < 0) {
+        throw new Exception("Invalid transaction amount");
+      } // if
     } // while
   } // check()
 
