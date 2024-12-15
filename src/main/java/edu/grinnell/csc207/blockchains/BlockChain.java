@@ -129,13 +129,13 @@ public class BlockChain implements Iterable<Transaction> {
     } else {
       this.clients.put(target, amount);
     } // if-else
-    if (clients.containsKey(source)) {
+    if (!source.equals("") && clients.containsKey(source)) {
       int amountsrc = (int) this.clients.get(source) - amount;
       this.clients.put(source, amountsrc);
       if (amountsrc < 0) {
         return false;
       } // if
-    } else {
+    } else if (!source.equals("") && !clients.containsKey(source)) {
       this.clients.put(source, -1 * amount);
       return false;
     } // if-else
