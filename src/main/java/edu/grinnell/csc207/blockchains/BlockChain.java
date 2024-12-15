@@ -165,8 +165,8 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public Block mine(Transaction t) {
     int lastNum = this.last.getBlock().getNum();
-    Hash newHash = new Hash(ByteBuffer.allocate(Integer.BYTES).putInt(lastNum).array());
-    return new Block(lastNum + 1, t, newHash, this.valid);
+    Hash lastHash = this.last.getBlock().getHash();
+    return new Block(lastNum + 1, t, lastHash, this.valid);
   } // mine(Transaction)
 
   /**
