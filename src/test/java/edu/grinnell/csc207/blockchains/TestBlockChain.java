@@ -328,8 +328,8 @@ public class TestBlockChain {
     chain.check();
 
 
-    // Block block1 = chain.mine(new Transaction("", "A", 4321));
-    // chain.append(block1);
+    Block block1 = chain.mine(new Transaction("", "A", 4321));
+    chain.append(block1);
     chain.append(chain.mine(new Transaction("", "A", 100)));
     assertTrue(chain.isCorrect(), "M: Mine first");
     chain.check();

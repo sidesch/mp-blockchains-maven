@@ -146,6 +146,7 @@ public class BlockChain implements Iterable<Transaction> {
   // | Methods |
   // +---------+
 
+
   /**
    * Gets the last block.
    *
