@@ -1,6 +1,6 @@
-# changes
+# Changes
 
-Changes made to our program.
+Changes made to our program:
 
 * Debugged the Block constructor by changing this.nonce every time it checks for its validity.
 * Debugged mine so that it checked for hashes given a block rather than the block number.
