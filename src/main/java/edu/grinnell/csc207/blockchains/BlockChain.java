@@ -1,6 +1,5 @@
 package edu.grinnell.csc207.blockchains;
 
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -252,6 +251,7 @@ public class BlockChain implements Iterable<Transaction> {
    *   If things are wrong at any block.
    */
   public void check() throws Exception {
+    // checks user's balances being correct
     Iterator<String> usrs = users();
     while (usrs.hasNext()) {
       if (clients.get(usrs.next()) < 0) {
@@ -304,12 +304,19 @@ public class BlockChain implements Iterable<Transaction> {
    */
   public Iterator<Block> blocks() {
     return new Iterator<Block>() {
-      BlockNode curr = first;
+      BlockNode curr = null;
       public boolean hasNext() {
+        if (curr == null) {
+          return first.getNext() != null;
+        } // if
         return curr.getNext() != null;
       } // hasNext()
 
       public Block next() {
+        if (curr == null) {
+          this.curr = first;
+          return first.getBlock();
+        } // if
         this.curr = this.curr.getNext();
         return this.curr.getBlock();
       } // next()
