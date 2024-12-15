@@ -185,7 +185,7 @@ public class Block {
       sb.append("[Deposit, ");
     } else {
       sb.append("[Source: " + this.transaction.getSource() + ", ");
-    }
+    } // if-else
     sb.append(String.format(", Target %s, Amount: %s]", this.transaction.getTarget(),
         this.transaction.getAmount()));
     sb.append(String.format(", Nonce: %l", this.nonce));
