@@ -11,3 +11,4 @@ Changes made to our program:
 * Debugged check to check if transactions had negative amounts.
 * Debugged balance to recalculate the balance of the user each time.
 * Update the UI.
+* Update block.toString().
