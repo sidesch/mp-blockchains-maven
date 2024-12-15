@@ -331,11 +331,18 @@ public class BlockChain implements Iterable<Transaction> {
    * @return that user's balance (or 0, if the user is not in the system).
    */
   public int balance(String user) {
-    if (this.clients.containsKey(user)) {
-      return this.clients.get(user);
-    } else {
-      return 0;
-    } // if-else
+    Iterator<Block> blks = blocks();
+    int balance = 0;
+    while (blks.hasNext()) {
+      Block curr = blks.next();
+      Transaction trans = curr.getTransaction();
+      if (trans.getSource().equals(user)) {
+        balance -= trans.getAmount();
+      } else if (trans.getTarget().equals(user)) {
+        balance += trans.getAmount();
+      } // if-else
+    } // while
+    return balance;
   } // balance()
 
   /**
