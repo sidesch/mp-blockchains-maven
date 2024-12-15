@@ -79,7 +79,7 @@ public class BlockChain implements Iterable<Transaction> {
     } // if the  hash is not valid or the previous hash is not correct raise a fuss
     try {
       blk.computeHash();
-      
+
       Hash expectedHash = blk.getHash();
       if (!(blockHash.equals(expectedHash))) {
         throw new IllegalArgumentException();
@@ -223,9 +223,11 @@ public class BlockChain implements Iterable<Transaction> {
       while (blks.hasNext()) {
         Block curr = blks.next();
         Transaction currenttrans = curr.getTransaction();
-        if (currenttrans.getSource().equals(lasttarget) || currenttrans.getTarget().equals(lasttarget)) {
+        if (currenttrans.getSource().equals(lasttarget)
+            || currenttrans.getTarget().equals(lasttarget)) {
           hastarget = true;
-        } else if (currenttrans.getSource().equals(lastsrc) || currenttrans.getTarget().equals(lastsrc)) {
+        } else if (currenttrans.getSource().equals(lastsrc)
+                  || currenttrans.getTarget().equals(lastsrc)) {
           hassrc = true;
         } // if-else
       } // while
