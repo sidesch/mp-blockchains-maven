@@ -358,7 +358,7 @@ public class BlockChain implements Iterable<Transaction> {
       BlockNode curr = null;
       public boolean hasNext() {
         if (curr == null) {
-          return first.getNext() != null;
+          return first != null;
         } // if
         return curr.getNext() != null;
       } // hasNext()

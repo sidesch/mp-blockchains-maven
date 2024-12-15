@@ -26,23 +26,26 @@ public class BlockChainUI {
         check: checks that the block chain is valid
         users: prints a list of users
         balance: finds a user's balance
+        transactions: prints out the chain of transactions
+        blocks: prints out the chain of blocks (for debugging only)
         help: prints this list of commands
         quit: quits the program""");
   } // printInstructions(PrintWriter)
 /**
  * Prompts the user for the users of a transaction.
- * @param pen printwriter to use
- * @param eyes Scanner to use
+ *
+ * @param pen
+ *    The PrintWriter
+ * @param eyes
+ *    The Scanner
  * @return Transaction with user input
- * @throws Exception invalid input
+ * @throws Exception
  */
   private static Transaction promptTransaction(PrintWriter pen, Scanner eyes) throws Exception {
     pen.printf("Source (return for deposit): ");
     String source = eyes.nextLine();
-
     pen.printf("Target: ");
     String recepient = eyes.nextLine();
-
     pen.printf("Amount: ");
     String amount = eyes.nextLine();
     int val;
@@ -56,11 +59,8 @@ public class BlockChainUI {
       pen.println("please make sure your amnt is a number");
       throw new Exception();
     } // try-catch
-
     return (new Transaction(source, recepient, val));
-
-  } //Transaction(Printwriter, Scanner)
-
+  } // promptTransaction(Printwriter, Scanner)
 
   /**
    * Run the UI.
@@ -77,19 +77,21 @@ public class BlockChainUI {
 
     BlockChain currentChain = new BlockChain(standardValidator);
 
-    while (true) {
+    boolean running = true;
+    while (running) {
       pen.printf("\n\nCommand: ");
       String commandLine = eyes.nextLine(); // Read user input
       if (commandLine.equals("quit")) {
-        break;
+        running = false;
+        pen.println("\nGoodbye\n");
       } else if (commandLine.equals("help")) {
         printInstructions(pen);
       } else if (commandLine.equals("balance")) {
         pen.printf("User: ");
         String findUser = eyes.nextLine(); // Read user input
         int balance = currentChain.balance(findUser);
-        if (balance <= 0) {
-          pen.printf("%s does not have a balance or does not exist,"
+        if (balance < 0) {
+          pen.printf("%s does not have a balance or does not exist, "
                 + "try users to see valid users", findUser);
         } else {
           pen.printf("%s's balance is %d", findUser, balance);
@@ -148,6 +150,17 @@ public class BlockChainUI {
         } catch (Exception e) {
           pen.printf("failed to add block because " +  e.getMessage());
         } // try-catch
+      } else if (commandLine.equals("blocks")) {
+        Iterator<Block> blks = currentChain.blocks();
+        while (blks.hasNext()) {
+          pen.println(blks.next());
+        } // while
+      } else if (commandLine.equals("transactions")) {
+        Iterator<Transaction> trans = currentChain.iterator();
+        trans.next();
+        while (trans.hasNext()) {
+          pen.println(trans.next());
+        } // while
       } else {
         pen.printf("invalid command, use help to see the valid commands");
       } // if-else
