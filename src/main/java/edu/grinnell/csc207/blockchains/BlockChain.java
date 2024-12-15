@@ -209,8 +209,28 @@ public class BlockChain implements Iterable<Transaction> {
     if (this.getSize() <= 1) {
       return false;
     } else {
+      Transaction trans = this.last.getBlock().getTransaction();
+      String lasttarget = trans.getTarget();
+      String lastsrc = trans.getSource();
+      Iterator<Block> blks = blocks();
+      boolean hastarget = false;
+      boolean hassrc = false;
       this.last = getNode(this.last.getBlock().getNum() - 1);
       this.last.setNext(null);
+      while (blks.hasNext()) {
+        Block curr = blks.next();
+        Transaction currenttrans = curr.getTransaction();
+        if (currenttrans.getSource().equals(lasttarget) || currenttrans.getTarget().equals(lasttarget)) {
+          hastarget = true;
+        } else if (currenttrans.getSource().equals(lastsrc) || currenttrans.getTarget().equals(lastsrc)) {
+          hassrc = true;
+        } // if-else
+      } // while
+      if (!hastarget) {
+        this.clients.remove(lasttarget);
+      } else if (!hassrc) {
+        this.clients.remove(lastsrc);
+      } // if-else
       return true;
     } // if-else
   } // removeLast()
@@ -251,11 +271,27 @@ public class BlockChain implements Iterable<Transaction> {
    *   If things are wrong at any block.
    */
   public void check() throws Exception {
-    // checks user's balances being correct
-    Iterator<String> usrs = users();
-    while (usrs.hasNext()) {
-      if (clients.get(usrs.next()) < 0) {
-        throw new Exception();
+    Iterator<Block> blks = blocks();
+    clients.clear();
+    byte[] emptyBytes = new byte[] {};
+    Hash prev = new Hash(emptyBytes);
+    while (blks.hasNext()) {
+      Block curr = blks.next();
+      if (!addTransaction(curr.getTransaction())) {
+        throw new Exception("Transactions are invalid");
+      } // if
+      if (!curr.getPrevHash().equals(prev)) {
+        throw new Exception("Previous hash is invalid");
+      } // if
+      prev = curr.getHash();
+      Hash thishash = curr.getHash();
+      curr.computeHash();
+      Hash actualhash = curr.getHash();
+      if (!thishash.equals(actualhash)) {
+        throw new Exception("Hash is not valid for its contents");
+      } // if
+      if (!valid.isValid(actualhash)) {
+        throw new Exception("Hash is not valid");
       } // if
     } // while
   } // check()
@@ -282,7 +318,7 @@ public class BlockChain implements Iterable<Transaction> {
   } // users()
 
   /**
-   * Find one user's balance.
+   * Find one user's.
    *
    * @param user
    *   The user whose balance we want to find.
