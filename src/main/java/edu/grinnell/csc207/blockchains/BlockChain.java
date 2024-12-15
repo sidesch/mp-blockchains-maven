@@ -76,14 +76,16 @@ public class BlockChain implements Iterable<Transaction> {
     if (!this.valid.isValid(blockHash)
         || !prevHash.equals(this.getNode(previous).getBlock().getHash())) {
       throw new IllegalArgumentException();
-    } // if
+    } // if the  hash is not valid or the previous hash is not correct raise a fuss
     try {
       blk.computeHash();
+      
       Hash expectedHash = blk.getHash();
       if (!(blockHash.equals(expectedHash))) {
         throw new IllegalArgumentException();
       } // if
     } catch (Exception e) {
+      return false;
       // do not append
     } // try-catch
     return true;
