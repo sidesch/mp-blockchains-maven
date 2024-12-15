@@ -29,8 +29,14 @@ public class BlockChainUI {
         help: prints this list of commands
         quit: quits the program""");
   } // printInstructions(PrintWriter)
-
-  private static Transaction promptTransaction(PrintWriter pen, Scanner eyes) throws Exception{
+/**
+ * Prompts the user for the users of a transaction.
+ * @param pen printwriter to use
+ * @param eyes Scanner to use
+ * @return Transaction with user input
+ * @throws Exception invalid input
+ */
+  private static Transaction promptTransaction(PrintWriter pen, Scanner eyes) throws Exception {
     pen.printf("Source (return for deposit): ");
     String source = eyes.nextLine();
 
@@ -53,8 +59,7 @@ public class BlockChainUI {
 
     return (new Transaction(source, recepient, val));
 
-
-  }
+  } //Transaction(Printwriter, Scanner)
 
 
   /**
