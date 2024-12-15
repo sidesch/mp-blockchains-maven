@@ -180,15 +180,16 @@ public class Block {
    */
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("Block " + this.blockNum + " "));
+    sb.append(String.format("Block " + this.blockNum + " (Transaction: "));
+
     if (this.transaction.getSource().equals("")) {
-      sb.append("[Deposit, ");
+      sb.append("[Deposit");
     } else {
-      sb.append("[Source: " + this.transaction.getSource() + ", ");
+      sb.append("[Source: " + this.transaction.getSource());
     } // if-else
-    sb.append(String.format(", Target %s, Amount: %s]", this.transaction.getTarget(),
+    sb.append(String.format(", Target: %s, Amount: %s]", this.transaction.getTarget(),
         this.transaction.getAmount()));
-    sb.append(String.format(", Nonce: %l", this.nonce));
+    sb.append(String.format(", Nonce: %d", this.nonce));
     if (!(this.previousHash == null)) {
       sb.append(String.format(", prevHash: " + this.previousHash.toString()));
     } else {

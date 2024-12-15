@@ -18,7 +18,7 @@ import java.util.Iterator;
  */
 public class BlockChainUI {
   private static void printInstructions(PrintWriter pen) {
-    pen.println("""
+    pen.printf("""
       Valid commands:
         mine: discovers the nonce for a given transaction
         append: appends a new block onto the end of the chain
@@ -144,7 +144,7 @@ public class BlockChainUI {
           pen.printf("failed to add block because " +  e.getMessage());
         } // try-catch
       } else {
-        pen.println("invalid command, use help to see the valid commands");
+        pen.printf("invalid command, use help to see the valid commands");
       } // if-else
     } // while loop to perpetually take commands
     eyes.close();
